@@ -14,22 +14,29 @@ def razbor(obj_in):
     # Список классов-коллекций
     coll_class = (list,tuple,set)
     global sum_n_l
+    # Перебор объектов входных данных
     for i in obj_in:
+        # Проверка принадлежности к отобранным классам
         if isinstance(i,use_class):
+            # Проверки принадлежности к классам коллекциям
             if isinstance(i,coll_class):
+                # Рекурсивная передача текущего элемента
                 razbor(i)
             elif isinstance(i,dict):
+                # Разбор словаря и рекурсивная передача результатов
                 i = i.items()
                 razbor(i)
             else:
                 if isinstance(i,str):
+                    # Расчет для строки
                     sum_n_l = sum_n_l + len(i)
                 else:
+                    # Расчет для числа
                     sum_n_l = sum_n_l + i
         else:
             pass
     return sum_n_l
-# Проверка
+# Проверка и вывод результатов
 if razbor(test) == 0:
     print(f'Переданы пустые данные или только необрабатываемые объекты')
 else:
