@@ -27,7 +27,7 @@ class house:
                 print(f'Этажи для переезда: {list(range(1,new_floor))}')
         else:
             print(f'Введено нечисловое или нецелое значение этажа - {type(new_floor)}')
-# Метод go_to класса house, с формированием данных для функции вывода
+# Метод go_to_1 класса house, с формированием данных для функции вывода
     def go_to_1(self,new_floor):
         if type(new_floor) == int:
             if new_floor > self.number_of_floors:
