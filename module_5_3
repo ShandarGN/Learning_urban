@@ -1,0 +1,149 @@
+# Шапка работы
+import sys
+print ('Created by',sys.version)
+print ('Домашняя работа по уроку "Перегрузка операторов"')
+print ('Студент Анисимов Алексей Юрьевич')
+print ('-'*20)
+
+# Исходные данные
+print('ЖК Эльбрус, 10 этажей')
+print('ЖК Акация, 20 этажей')
+name_house = ['ЖК Эльбрус','ЖК Акация']
+floor_house = [10,20]
+print('-'*20)
+
+# Функция проверки принадлежности к классам house и int, входные данные - объект, выходные число-результат и объект
+def chck_cls_atr(obj):
+    if isinstance(obj, house):
+        if type(obj.number_of_floors) == int:
+            return (2, obj)
+        else:
+            return (1, obj)
+    else:
+        return (0, obj)
+
+# Функция вывода результатов проверки, входные данные число и объект, вывод текста и объект, как выходные данные
+def print_res(itog,obj):
+    if itog == 0:
+        print(f'Объект {obj} не принедлежит классу house.')
+        return ''
+    elif itog == 1:
+        print(f'Поле number_of_floors содержит нецелое или нечисловое значение.')
+        return ''
+    else:
+        return obj
+
+# Описание класса
+class house:
+    def __init__(self, name_in, number_of_floors_in):
+        self.name = name_in
+        self.number_of_floors = number_of_floors_in
+
+# Перегрузка
+    # Перегрузка оператора сравнения (равно) по атрибуту number_of_floors
+    def __eq__(self, other):
+        res_check = chck_cls_atr(other)
+        if res_check[0] == 2:
+            return self.number_of_floors == other.number_of_floors
+        else:
+            return print_res(*res_check)
+    # Перегрузка оператора сравнения (меньше) по атрибуту number_of_floors
+    def __lt__(self,other):
+        res_check = chck_cls_atr(other)
+        if res_check[0] == 2:
+            return self.number_of_floors < other.number_of_floors
+        else:
+            return print_res(*res_check)
+    # Перегрузка оператора сравнения (больше) по атрибуту number_of_floors
+    def __gt__(self,other):
+        res_check = chck_cls_atr(other)
+        if res_check[0] == 2:
+            return self.number_of_floors > other.number_of_floors
+        else:
+            return print_res(*res_check)
+    # Перегрузка оператора сравнения (меньше-равно) по атрибуту number_of_floors
+    def __le__(self,other):
+        res_check = chck_cls_atr(other)
+        if res_check[0] == 2:
+            return self.number_of_floors <= other.number_of_floors
+        else:
+            return print_res(*res_check)
+    # Перегрузка оператора сравнения (больше-равно) по атрибуту number_of_floors
+    def __ge__(self,other):
+        res_check = chck_cls_atr(other)
+        if res_check[0] == 2:
+            return self.number_of_floors >= other.number_of_floors
+        else:
+            return print_res(*res_check)
+    # Перегрузка оператора сравнения (не равно) по атрибуту number_of_floors
+    def  __ne__(self,other):
+        res_check = chck_cls_atr(other)
+        if res_check[0] == 2:
+            return self.number_of_floors != other.number_of_floors
+        else:
+            return print_res(*res_check)
+    # Перегрузка оператора сложения (__add__)
+    def __add__(self,value):
+        if type(value) == int:
+            self.number_of_floors = self.number_of_floors + value
+            return self.number_of_floors
+        else:
+            print('Ведено нецелое или нечисловое значение')
+            return ''
+    # Перегрузка оператора вычитания
+    def __sub__(self,value):
+        if type(value) == int:
+            if self.number_of_floors - value < 1:
+               self.number_of_floors = 1
+            else:
+                self.number_of_floors = self.number_of_floors - value
+            return self.number_of_floors
+        else:
+            print('Ведено нецелое или нечисловое значение')
+            return ''
+    # Перегрузка оператора умножения
+    def __mul__(self,value):
+        if type(value) == int:
+            self.number_of_floors = self.number_of_floors * value
+            return self.number_of_floors
+        else:
+            print('Ведено нецелое или нечисловое значение')
+            return ''
+    # Перегрузка оператора отраженного сложения (__radd__)
+    def __radd__(self, value):
+        if type(value) == int:
+            self.number_of_floors = value + self.number_of_floors
+            return self.number_of_floors
+        else:
+            print('Ведено нецелое или нечисловое значение')
+            return ''
+    # Перегрузка оператора инкременации (__iadd__)
+    def __iadd__(self, value):
+        if type(value) == int:
+            self.number_of_floors += value
+            return self.number_of_floors
+        else:
+            print('Ведено нецелое или нечисловое значение')
+            return ''
+
+# Создание объектов класса house
+h1 = house(name_house[0], floor_house[0])
+h2 = house(name_house[1], floor_house[1])
+
+# Вывод результатов
+print(f'Номера этажей объектов h1 ({h1.name}) и h2 ({h2.name}), которые обрабатываются перегрузкой операторов')
+print(f'h1 = {h1.number_of_floors} и h2 = {h2.number_of_floors} ')
+print(f'h1 == h2 это {h1 == h2}')
+print(f'h1 > h2 это {h1 > h2}')
+print(f'h1 < h2 это {h1 < h2}')
+print(f'h1 <= h2 это {h1 <= h2}')
+print(f'h1 >= h2 это {h1 >= h2}')
+print(f'h1 != h2 это {h1 != h2}')
+print(f'h1 + 10 это {h1 + 10}')
+print(f'h1 - 10 это {h1 - 10}')
+print(f'h1 * 10 это {h1 * 10}')
+h1.number_of_floors = 10
+print(f'(__radd__) 10 + h1 это {10 + h1}')
+h1.number_of_floors = 10
+h1 += 10
+print(f'(__iadd__) h1+=10 это {h1}')
