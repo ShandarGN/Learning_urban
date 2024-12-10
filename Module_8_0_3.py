@@ -7,7 +7,7 @@ print ('-'*20)
 # Исходеные данные
 dict_car = {'0000' : None}
 lst_name = ['Lada', 'BMW', 'Honda', 'Mazda', 'Mersedes', 'Opel', 'Kamaz']
-lst_VIN = [123456, 956.859, 359435, 15090435, 190435, 659841, 458961]
+lst_VIN = [123456, 956.859, 359435, 15090435, 190435, 659841, 1458961]
 lst_num = ['654321', '159784', 659848, '659848', 'LTR659848', '596', 'КС5596']
 # Описание классов исключений
     # Ошибка в VIN
@@ -36,7 +36,7 @@ class car():
         if not(isinstance(vin, int)):
             raise IncorrectVinNumber(f'Введён некорректный тип VIN: {type(vin)}', vin)
     # Проверка диапазона вин от 0 до 1000000
-        if vin < 0 or vin > 10000000:
+        if vin < 1000000 or vin > 9999999:
             raise IncorrectVinNumber(f'Неверный диапазон для VIN', vin)
         else:
             return True
@@ -64,7 +64,6 @@ def cr_car(model, vin, number):
         print(f'Данные вызвавшие ошибку: {err.info}')
     # Создание в случае отсутствия ошибок
     else:
-        dict_car[key_car] = car(model, vin, number)
         print('ОК')
 # Вывод результатов с разными наборами данных
 for i in range(0, 7):
