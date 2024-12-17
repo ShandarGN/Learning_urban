@@ -58,8 +58,12 @@ start_thrd_main_4 = time.time()
 # Запуск функции разными потоками с приостановкой основного
 for i in dict_thrd.values():
     i.start()
-for i in dict_thrd.values():
-    i.join()
+for i, j in dict_thrd.items():
+    if j.is_alive():
+        j.join()
+        print(f'Основной процесс приостановлен для выполнения процесса {i} ')
+    else:
+        print(f'Процесс {i} не запущен')
 # Расчет и вывод времени выполнения
 end_thrd_main_4 = time.time()
 dlit_thrd_main_4 = round(end_thrd_main_4 - start_thrd_main_4, 2)
