@@ -21,7 +21,7 @@ def wite_words(dict_input, file_name):
         for j, k in dict_input.items():
             with open(j, "a") as file_out:
                 print(f'Работа с файлом: {j}')
-                print(f'Текущие потоки: {threading.enumerate()}')
+                print(f'Текущие потоки до: {threading.enumerate()}')
                 file_in.seek(0)
                 for i in range(k):
                     read_char, word_in = '', ''
@@ -34,7 +34,8 @@ def wite_words(dict_input, file_name):
                     print(f'Запись слова № {i} - {word_in}')
                     time.sleep(0.1)
                 print(f'Завершилась запись в файл: {j}')
-                print(f'Текущие потоки: {threading.enumerate()}')
+                print(f'Текущие потоки после: {threading.enumerate()}')
+                print('-'*20)
 # Начальная (start_thrd_main) и конечная (end_thrd_main) точки для расчета времени работы одним потоком
 start_thrd_main = time.time()
 # Запуск функции одним потоком
@@ -55,14 +56,10 @@ print(dict_thrd)
 # Начальная (start_thrd_main) и конечная (end_thrd_main) точки для расчета времени работы c несколькими потоками
 start_thrd_main_4 = time.time()
 # Запуск функции разными потоками с приостановкой основного
-dict_thrd['thread00'].start()
-dict_thrd['thread01'].start()
-dict_thrd['thread02'].start()
-dict_thrd['thread03'].start()
-dict_thrd['thread00'].join()
-dict_thrd['thread01'].join()
-dict_thrd['thread02'].join()
-dict_thrd['thread03'].join()
+for i in dict_thrd.values():
+    i.start()
+for i in dict_thrd.values():
+    i.join()
 # Расчет и вывод времени выполнения
 end_thrd_main_4 = time.time()
 dlit_thrd_main_4 = round(end_thrd_main_4 - start_thrd_main_4, 2)
