@@ -1,12 +1,12 @@
 # Импорт необходимых библиотек
-import sys
+# import sys
 import unittest
 import random
-# Шапка работы
-print ('Created by',sys.version)
-print ('Домашнее задание по теме "Простые Юнит-Тесты"')
-print ('Студент Анисимов Алексей Юрьевич')
-print ('-'*20)
+# # Шапка работы
+# print ('Created by',sys.version)
+# print ('Домашнее задание по теме "Простые Юнит-Тесты"')
+# print ('Студент Анисимов Алексей Юрьевич')
+# print ('-'*20)
 # Описание функции генерации случайных имен, принимает длину имён
 def rnd_name(dln):
     abc = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
@@ -30,19 +30,22 @@ class Runner:
     # Метод walk
     def walk(self):
         self.distance += 5
-    # Медот вывода имени объекта класса
+    # Метод вывода имени объекта класса
     def __str__(self):
         return self.name
 # Создание имен тестируемых объектов
 runner_name = list(map(rnd_name, [dln for i in range(kol)]))
 # Описание класса тестов
 class RunnerTest(unittest.TestCase):
+    # Словарь управляющий пропуском тестов
+    dict_tests = {'test_walk': False, 'test_run': False, 'test_challenge': False, 'all': False }
     count = count_test
     runner_list = []
     # Заполнение классового списка тестируемых объектов
     for i in runner_name:
         runner_list.append(Runner(i))
     # Тестирование метода walk
+    @unittest.skipIf(dict_tests['test_walk'] or dict_tests['all'], 'test_walk - пропущен')
     def test_walk(self):
         for j in RunnerTest.runner_list:
             for i in range(RunnerTest.count):
@@ -50,6 +53,7 @@ class RunnerTest(unittest.TestCase):
             self.assertEqual(j.distance, 50)
             j.distance = 0
     # Тестирование метода run
+    @unittest.skipIf(dict_tests['test_run'] or dict_tests['all'], 'test_run - пропущен')
     def test_run(self):
         for j in RunnerTest.runner_list:
             for i in range(RunnerTest.count):
@@ -57,6 +61,7 @@ class RunnerTest(unittest.TestCase):
             self.assertEqual(j.distance, 100)
             j.distance = 0
     # Тестирование различий результатов методов walk и run
+    @unittest.skipIf(dict_tests['test_challenge'] or dict_tests['all'], 'test_challenge - пропущен')
     def test_challenge(self):
         for j in range(kol//2):
             for i in range(RunnerTest.count):
