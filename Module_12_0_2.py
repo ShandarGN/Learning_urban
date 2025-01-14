@@ -2,6 +2,9 @@
 # import sys
 import unittest
 import pprint
+# Подключение модуля с управляющим словарем
+# https://github.com/ShandarGN/Learning_urban/blob/main/Mod_suite_12_3.py
+import Mod_suite_12_3
 # # Шапка работы
 # print ('Created by',sys.version)
 # print ('Домашнее задание по теме "Методы Юнит-тестирования"')
@@ -50,9 +53,7 @@ class Tournament:
         return finishers
 # Описаник класса TournamentTest (тест класса Tournament)
 class TournamentTest(unittest.TestCase):
-    # Словарь управляющий пропуском тестов
-    dict_tests = {'test_run_01': False, 'test_run_02': False, 'test_run_03': False, 'test_run_04': True, 'all': False}
-    # Добавление атрибута all_results к классу Tournament
+    # Добавление атрибутов all_results к классу Tournament
     @classmethod
     def setUpClass(cls):
         cls.all_results = {}
@@ -61,21 +62,24 @@ class TournamentTest(unittest.TestCase):
         for i, j in dict_runners.items():
             dict_runners_obj[i]= Runner(i, j)
     # Первый тест класса Tournament и проверка его пропуска
-    @unittest.skipIf(dict_tests['test_run_01'] or dict_tests['all'], 'test_run_01 - пропущен')
+    @unittest.skipIf(Mod_suite_12_3.dict_TournamentTest['test_run_01'] or Mod_suite_12_3.dict_TournamentTest['all'],
+                     'test_run_01 - пропущен')
     def test_run_01(self):
         Tournament_tst = Tournament(90, dict_runners_obj['Усэйн'], dict_runners_obj['Ник'])
         self.all_results.update({'Test01': Tournament_tst.start()})
         # Проверка истинности условия для теста
         self.assertTrue(self.all_results['Test01'][2] == 'Ник')
     # Второй тест класса Tournament и проверка его пропуска
-    @unittest.skipIf(dict_tests['test_run_02'] or dict_tests['all'], 'test_run_02 - пропущен')
+    @unittest.skipIf(Mod_suite_12_3.dict_TournamentTest['test_run_02'] or Mod_suite_12_3.dict_TournamentTest['all'],
+                     'test_run_02 - пропущен')
     def test_run_02(self):
         Tournament_tst = Tournament(90, dict_runners_obj['Андрей'], dict_runners_obj['Ник'])
         self.all_results.update({'Test02': Tournament_tst.start()})
         # Проверка истинности условия для теста
         self.assertTrue(self.all_results['Test02'][2] == 'Ник')
     # Третий тест класса Tournament и проверка его пропуска
-    @unittest.skipIf(dict_tests['test_run_03'] or dict_tests['all'], 'test_run_03 - пропущен')
+    @unittest.skipIf(Mod_suite_12_3.dict_TournamentTest['test_run_03'] or Mod_suite_12_3.dict_TournamentTest['all'],
+                     'test_run_03 - пропущен')
     def test_run_03(self):
         Tournament_tst = Tournament(90, dict_runners_obj['Усэйн'], dict_runners_obj['Андрей'],
                                     dict_runners_obj['Ник'])
@@ -92,16 +96,15 @@ class TournamentTest(unittest.TestCase):
     бегун (Усэйн), если подходить с точки зрения логики, то Ник должен прийти вторым, но в результате метода 
     Tournament.start этого не произойдёт. 
     """
-    @unittest.skipIf(dict_tests['test_run_04'] or dict_tests['all'], 'test_run_04 - пропущен')
+    @unittest.skipIf(Mod_suite_12_3.dict_TournamentTest['test_run_04'] or Mod_suite_12_3.dict_TournamentTest['all'],
+                     'test_run_04 - пропущен')
     def test_run_04(self):
         Tournament_tst = Tournament(3, dict_runners_obj['Ник'], dict_runners_obj['Усэйн'])
         self.all_results.update({'Test04': Tournament_tst.start()})
-
         self.assertTrue(self.all_results['Test04'][2] == 'Ник')
     # Вывод атрибута all_results (результаты тестов)
     @classmethod
     def tearDownClass(cls):
         pprint.pprint(cls.all_results)
-
 if __name__ == '__main__':
     unittest.main()
